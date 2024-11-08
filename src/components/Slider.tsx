@@ -33,8 +33,12 @@ const slides = [
 
 const Slider = () => {
   const [current, setCurrent] = useState(0);
+  const [mounted, setMounted] = useState(false);
 
+  // Set mounted state to true after the component is mounted on the client
   useEffect(() => {
+    setMounted(true);
+
     const interval = setInterval(() => {
       setCurrent((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
     }, 3000);
@@ -44,10 +48,13 @@ const Slider = () => {
     };
   }, []);
 
+  // Return null or loading indicator until the component is mounted to avoid hydration issues
+  if (!mounted) return null;
+
   return (
-    <div className="h-[calc(100vh-80px)] overflow-hidden">
+    <div className="h-[calc(100vh-80px)] overflow-hidden relative">
       <div
-        className="w-max h-full flex transition-all ease-in-out duration-1000"
+        className="w-max h-full flex transition-transform duration-1000 ease-in-out"
         style={{ transform: `translateX(-${current * 100}vw)` }}
       >
         {slides.map((slide) => (
@@ -57,7 +64,7 @@ const Slider = () => {
           >
             {/* TEXT CONTAINER */}
             <div className="h-1/2 xl:w-1/2 xl:h-full flex items-center justify-center gap-8 flex-col 2xl:gap-12 text-center">
-              <h2 className=" text-xl lg:text-3xl 2xl:text-5xl">
+              <h2 className="text-xl lg:text-3xl 2xl:text-5xl">
                 {slide.description}
               </h2>
               <h1 className="text-5xl lg:text-6xl 2xl:text-8xl font-semibold">
@@ -69,11 +76,11 @@ const Slider = () => {
                 </button>
               </Link>
             </div>
-            {/* iMAGE CONTAINER */}
-            <div className="h-1/2 xl:w-1/2 xl:h-full  relative">
+            {/* IMAGE CONTAINER */}
+            <div className="h-1/2 xl:w-1/2 xl:h-full relative">
               <Image
                 src={slide.img}
-                alt=""
+                alt={slide.title}
                 fill
                 sizes="100%"
                 className="object-cover"
@@ -82,12 +89,13 @@ const Slider = () => {
           </div>
         ))}
       </div>
+      {/* Slide indicators */}
       <div className="absolute m-auto left-1/2 bottom-8 flex gap-4">
         {slides.map((slide, index) => (
           <div
-            className={`w-3 h-3 rounded-full ring-1 ring-gray-600 flex items-center justify-center ${
+            className={`w-3 h-3 rounded-full ring-1 ring-gray-600 flex items-center justify-center cursor-pointer transition-all ${
               current === index ? "scale-150" : ""
-            } cursor-pointer`}
+            }`}
             key={slide.id}
             onClick={() => setCurrent(index)}
           >
