@@ -7,6 +7,10 @@ const nextConfig = {
         hostname: "images.pexels.com",
         pathname: "/**", // This allows any path under "images.pexels.com"
       },
+      {
+        protocol: "https",
+        hostname: "static.wixstatic.com",
+      },
     ],
   },
 };
