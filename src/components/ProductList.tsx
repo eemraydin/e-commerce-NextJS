@@ -3,8 +3,9 @@ import { products } from "@wix/stores";
 import Image from "next/image";
 import Link from "next/link";
 import DOMPurify from "isomorphic-dompurify";
+import Pagination from "./Pagination";
 
-const PRODUCT_PER_PAGE = 20;
+const PRODUCT_PER_PAGE = 8;
 
 const ProductList = async ({
   categoryId,
@@ -16,14 +17,45 @@ const ProductList = async ({
   searchParams?: any;
 }) => {
   const wixClient = await wixClientServer();
-  const response = await wixClient.products
+
+  let productQuery = wixClient.products
     .queryProducts()
+    .startsWith("name", searchParams?.name || "")
     .eq("collectionIds", categoryId)
+    .hasSome(
+      "productType",
+      searchParams?.type ? [searchParams.type] : ["physical", "digital"]
+    )
+    .gt("priceData.price", searchParams?.min || 0)
+    .lt("priceData.price", searchParams?.max || 999999)
     .limit(limit || PRODUCT_PER_PAGE)
-    .find();
+    // .ascending("name")
+    .skip(
+      searchParams?.page
+        ? parseInt(searchParams.page) * (limit || PRODUCT_PER_PAGE)
+        : 0
+    );
+
+  if (searchParams?.sort) {
+    const [sortType, sortBy] = searchParams.sort.split(" ");
+    const validSortFields = ["price", "name", "lastUpdated"];
+
+    if (validSortFields.includes(sortBy)) {
+      if (sortType === "asc") {
+        productQuery = productQuery.ascending(sortBy);
+      } else if (sortType === "desc") {
+        productQuery = productQuery.descending(sortBy);
+      }
+    } else {
+      console.error(`Invalid sort field: ${sortBy}`);
+    }
+  }
+
+  // Execute query
+  const response = await productQuery.find();
 
   return (
-    <div className="mt-12 flex gap-x-8 gap-y-16 justify-between flex-wrap">
+    <div className="mt-12 flex gap-x-8 gap-y-16 items-center justify-between flex-wrap">
       {response.items.map((product: products.Product) => (
         <Link
           href={"/" + product.slug}
@@ -73,6 +105,11 @@ const ProductList = async ({
           </button>
         </Link>
       ))}
+      <Pagination
+        currentPage={response.currentPage || 0}
+        hasPrev={response.hasPrev()}
+        hasNext={response.hasNext()}
+      />
     </div>
   );
 };
