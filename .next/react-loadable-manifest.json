@@ -2,5 +2,11 @@
   "../node_modules/@wix/sdk/build/auth/AppStrategy.js -> jose": {
     "id": "../node_modules/@wix/sdk/build/auth/AppStrategy.js -> jose",
     "files": []
+  },
+  "components/Navbar.tsx -> ./NavIcons": {
+    "id": "components/Navbar.tsx -> ./NavIcons",
+    "files": [
+      "static/chunks/_app-pages-browser_src_components_NavIcons_tsx.js"
+    ]
   }
 }
