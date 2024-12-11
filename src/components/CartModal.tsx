@@ -6,11 +6,35 @@ import Image from "next/image";
 
 import { media as wixMedia } from "@wix/sdk";
 import { useWixClient } from "@/hooks/useWixClient";
+import { currentCart } from "@wix/ecom";
 
 const CartModal = () => {
   const wixClient = useWixClient();
   const { cart, isLoading, removeFromCart } = useCartStore();
 
+  const handleCheckout = async () => {
+    try {
+      const checkout =
+        await wixClient.currentCart.createCheckoutFromCurrentCart({
+          channelType: currentCart.ChannelType.WEB,
+        });
+
+      const { redirectSession } =
+        await wixClient.redirects.createRedirectSession({
+          ecomCheckout: { checkoutId: checkout.checkoutId },
+          callbacks: {
+            postFlowUrl: window.location.origin,
+            thankYouPageUrl: `${window.location.origin}/success`,
+          },
+        });
+
+      if (redirectSession?.fullUrl) {
+        window.location.href = redirectSession.fullUrl;
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
   return (
     <div className="absolute p-4 w-max rounded-md shadow-2xl border-gray-100 border-y-2 bg-white top-12 right-0 gap-6 z-20 flex flex-col">
       {!cart.lineItems ? (
@@ -90,6 +114,7 @@ const CartModal = () => {
               <button
                 className="rounded-md py-3 px-4 bg-black text-white disabled:cursor-not-allowed disabled:opacity-75"
                 disabled={isLoading}
+                onClick={handleCheckout}
               >
                 Checkout
               </button>

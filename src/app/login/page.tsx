@@ -3,7 +3,7 @@
 import { useWixClient } from "@/hooks/useWixClient";
 import { LoginState } from "@wix/sdk";
 import { usePathname, useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 
 enum MODE {
@@ -20,9 +20,12 @@ const LoginPage = () => {
 
 
 
-  if (isLoggedIn) {
-    router.push("/");
-  }
+ useEffect(() => {
+   const isLoggedIn = wixClient.auth.loggedIn();
+   if (isLoggedIn) {
+     router.push("/");
+   }
+ }, [wixClient, router]);
 
   const [mode, setMode] = useState(MODE.LOGIN);
 

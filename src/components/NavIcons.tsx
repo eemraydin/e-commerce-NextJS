@@ -51,6 +51,12 @@ const NavIcons = () => {
     router.push(logoutUrl);
   };
 
+  if (isProfileOpen) {
+    isCartOpen && setIsCartOpen(false);
+  } if (isCartOpen) {
+    isProfileOpen && setIsProfileOpen(false);
+  }
+  
 
     const { cart, counter, getCart } = useCartStore();
 
@@ -71,7 +77,7 @@ const NavIcons = () => {
       />
       {isProfileOpen && (
         <div className="absolute p-4 rounded-md top-12 bg-white left-0 text-sm z-20 shadow-xl">
-          <Link href="/">Profile</Link>
+          <Link href="/profile">Profile</Link>
           <div className="mt-2 cursor-pointer" onClick={handleLogout}>
             {isLoading ? "Logging out..." : "Logout"}
           </div>

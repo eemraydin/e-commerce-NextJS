@@ -1,5 +1,17 @@
 {
-  "node": {},
+  "node": {
+    "7f9c01ee9ccc2c8cec8900099b5c59b6128b17ae38": {
+      "workers": {
+        "app/profile/page": {
+          "moduleId": "(rsc)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22%2FUsers%2Femre%2FDesktop%2Fe-commerce-NextJS-1%2Fsrc%2Flib%2Factions.ts%22%2C%5B%5B%227f9c01ee9ccc2c8cec8900099b5c59b6128b17ae38%22%2C%22updateUser%22%5D%5D%5D%5D&__client_imported__=!",
+          "async": false
+        }
+      },
+      "layer": {
+        "app/profile/page": "rsc"
+      }
+    }
+  },
   "edge": {},
-  "encryptionKey": "ViWST50BBkl2UFgutp6JNK31bIGesr0HT8b7a53B+mw="
+  "encryptionKey": "6CAvPLp0mWATnQ+4cQk9k4GyzToY42/7LdYS1UVhnlA="
 }

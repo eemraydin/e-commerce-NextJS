@@ -105,11 +105,11 @@ const ProductList = async ({
           </button>
         </Link>
       ))}
-      <Pagination
+      {searchParams?.cat || searchParams?.name ? <Pagination
         currentPage={response.currentPage || 0}
         hasPrev={response.hasPrev()}
         hasNext={response.hasNext()}
-      />
+      /> : null}
     </div>
   );
 };

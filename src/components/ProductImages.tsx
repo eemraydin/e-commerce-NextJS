@@ -32,18 +32,22 @@ const ProductImages = ({items}:{items:any}) => {
           alt=""
           fill
           sizes="50vw"
-          className="object-cover rounded-md"
+          className="object-contain rounded-md"
         />
       </div>
-      <div className="flex gap-4 mt-8">
-        {items.map((item:any, i:number) => (
-          <div className="w-1/4 h-32 relative gap-4 mt-8" key={item._id} onClick={()=> setIndex(i)}>
+      <div className="flex gap-4 mt-8 cursor-pointer">
+        {items.map((item: any, i: number) => (
+          <div
+            className="w-1/4 h-32 relative gap-4 mt-8"
+            key={item._id}
+            onClick={() => setIndex(i)}
+          >
             <Image
               src={item.image.url}
               alt=""
               fill
               sizes="30vw"
-              className="object-cover rounded-md"
+              className="object-contain rounded-md"
             />
           </div>
         ))}

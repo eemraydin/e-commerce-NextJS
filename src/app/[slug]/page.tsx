@@ -19,10 +19,10 @@ const SinglePage = async ({ params }: { params: { slug: string } }) => {
   const product = products.items[0];
 
   return (
-    <div className="px-4 md:px-8 lg:px-16 xl:px-32 2xl:px-64 relative flex flex-col lg:flex-row gap-16">
+    <div className="px-4 md:px-8 lg:px-16 xl:px-32 2xl:px-64 relative flex flex-col lg:flex-row gap-16 xl:mt-10">
       {/* IMG */}
-      <div className="w-full lg:w-1/2 lg:sticky top-20 h-max">
-        <ProductImages items={product.media?.items} />
+      <div className="w-full lg:w-1/2 xl:w-1/4 lg:sticky top-20 h-max">
+        <ProductImages items={product.media?.items}  />
       </div>
 
       {/* TEXTS */}
@@ -50,7 +50,7 @@ const SinglePage = async ({ params }: { params: { slug: string } }) => {
           />
         ) : (
           <Add
-            productId={product._id}
+            productId={product._id? product._id : ""}
             variantId="00000000-0000-0000-0000-000000000000"
             stockNumber={product.stock?.quantity ||  0}
           />
