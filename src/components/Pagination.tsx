@@ -25,18 +25,19 @@ const Pagination = ({
   return (
     <div className="mt-1 justify-between flex w-full">
       <button
-        className="rounded-md bg-main text-white p-2 text-sm w-24 cursor-pointer disabled:cursor-not-allowed disabled:bg-pink-200"
+        className="rounded-md bg-main text-white p-1.5 text-sm w-18 cursor-pointer disabled:cursor-not-allowed disabled:bg-pink-100"
         disabled={!hasPrev}
         onClick={() => currentPageUrl(currentPage - 1)}
       >
-        Previous
+        {"<< Prev"}
       </button>
       <button
-        className="rounded-md bg-main text-white p-2 text-sm w-24 cursor-pointer disabled:cursor-not-allowed disabled:bg-pink-200"
+        className="rounded-md bg-main text-white p-1.5 text-sm w-18 cursor-pointer disabled:cursor-not-allowed disabled:bg-pink-100"
         disabled={!hasNext}
         onClick={() => currentPageUrl(currentPage + 1)}
       >
-        Next
+
+        {"Next >>"}
       </button>
     </div>
   );

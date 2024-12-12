@@ -52,7 +52,7 @@ const Slider = () => {
   if (!mounted) return null;
 
   return (
-    <div className="h-[calc(100vh-80px)] overflow-hidden relative">
+    <div className="h-[calc(70vh-80px)] overflow-hidden relative">
       <div
         className="w-max h-full flex transition-transform duration-1000 ease-in-out"
         style={{ transform: `translateX(-${current * 100}vw)` }}
@@ -83,7 +83,7 @@ const Slider = () => {
                 alt={slide.title}
                 fill
                 sizes="100%"
-                className="object-cover"
+                className="object-cover object-center"
               />
             </div>
           </div>
